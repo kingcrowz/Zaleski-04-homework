@@ -14,17 +14,19 @@ var endScore = document.querySelector("#scorelist");
 var hs1 = document.querySelector(".high1");
 var hs2 = document.querySelector(".high2");
 var hs3 = document.querySelector(".high3");
+var button1 = document.querySelector(".answer1");
+var button2 = document.querySelector(".answer2");
+var button3 = document.querySelector(".answer3");
+var button4 = document.querySelector(".answer4");
+//sets up a bunch of queryselector variables for various things in the program
 
 
 var isWin = false;
 var timer;
 var timerCount;
 var highscoreSaver =JSON.parse(localStorage.getItem("Scores")) || [];
+//the highscore will either parse and pull the scores from local storage or make itself as an empty array.
 
-var button1 = document.querySelector(".answer1");
-var button2 = document.querySelector(".answer2");
-var button3 = document.querySelector(".answer3");
-var button4 = document.querySelector(".answer4");
 
 
 var questions = ["Which of these is a binary variable, having two possible values called true and false.", "Which of these is not a programming language?", "What loop must go through at least once?", "What does CSS stand for?"];
@@ -37,19 +39,20 @@ var a3 =  true;
 var answers4 = ["Collapsing Style Sheets", "Cascading Style Sheets", "Cascading System Sheet", "Collective Style Sheet"];
 var a4 =  true;
 var a = [true, true, true, true];
+//these variables are containing the questions, the answers, and sets a boolean to check if a question is answered
+
 
 var correct = [3, 3, 2, 1];
 var answered = 0;
 var score = 4;
+//correct contains the correct answers to each question, answered checks how many questions have been answered, and the score is set to a base of 4, allowing score to range from 0-8
 
 
 // The init function is called when the page loads 
 function init() {
-  // mainEl.style.display = 'block';
-  // headEl.style.display = 'block';
-  // formEl.style.display = 'none';
-  // formEl.style.display = 'block';     **used to show hidden**
+  
 }
+
 
 // The startGame function is called when the start button is clicked
 function startGame() {
@@ -68,17 +71,17 @@ function startGame() {
   startTimer()
 }
 
-// The winGame function is called when the win condition is met
+
+// The winGame function is called when the win condition is met, and then hides or displays various elements from the page
 function winGame() {
 
    mainEl.style.display = 'none';
    headEl.style.display = 'none';
    formEl.style.display = 'block';
-
   wordBlank.textContent = "Pencils Down! you scored a " + score;
   startButton.disabled = false;
-  // setScore()
 }
+
 
 // The loseGame function is called when timer reaches 0
 function loseGame() {
@@ -112,9 +115,9 @@ function startTimer() {
   }, 1000);
 }
 
-// Creates blanks on screen
+// Creates the questions and answers on the screen
 function setQuestion() {
-  // Randomly picks word from words array
+  //picks word from words array
   var currentAnswers = answers1;
   button1.textContent = answers1[0];
   button2.textContent = answers1[1];
@@ -149,32 +152,25 @@ function setQuestion() {
     a[4] = false;
   } else if(answered === 0){
     a[1] = false;
-    //blank out the answers here, quiz is over.
   }
   else{
-    // isWin = true;
-    // button1.textContent = "";
-    // button2.textContent = "";
-    // button3.textContent = "";
-    // button4.textContent = "";
     endGame()
   }
-
-
-  //**TEST */
-  wordBlank.textContent = questions[answered];
-  
-  console.log(answered);
+  wordBlank.textContent = questions[answered]; 
 }
 
+
+//function is called once the game is won, and then hides/displays various elements of the page
 function endGame(){
   isWin = true;
   mainEl.style.display = "none";
   formEl.style.display = "block";
+  var update = document.querySelector(".score2");
+  update.textContent = score;
 }
 
 
-
+//sets up a function and event listener for the first answer button, and then checks for answer validity, finally changing the question and updating the score
 function checkB1(){
   console.log(correct[answered]);
   if(correct[answered] === 0){
@@ -190,6 +186,7 @@ function checkB1(){
 button1.addEventListener("click", checkB1)
 
 
+//sets up a function and event listener for the 2nd answer button, and then checks for answer validity, finally changing the question and updating the score
 function checkB2(){
   if(correct[answered] === 1){
     score++;
@@ -204,6 +201,7 @@ function checkB2(){
 button2.addEventListener("click", checkB2)
 
 
+//sets up a function and event listener for the 3rd answer button, and then checks for answer validity, finally changing the question and updating the score
 function checkB3(){
   if(correct[answered] === 2){
     score++;
@@ -218,6 +216,7 @@ function checkB3(){
 button3.addEventListener("click", checkB3)
 
 
+//sets up a function and event listener for the 4th answer button, and then checks for answer validity, finally changing the question and updating the score
 function checkB4(){
   if(correct[answered] === 3){
     score++;
@@ -237,7 +236,6 @@ function setScore() {
   localStorage.setItem("HighScore", score);
   sessionStorage.setItem("HighScore", score);
   scoreEl.textContent = score;
-  // localStorage.setItem();
 }
 
 // These functions are used by init
@@ -295,7 +293,10 @@ function submitInfo(event){
   formEl.style.display = "none";
   resetButton.style.display = "block";
 }
+//pulls info from the submit info form and uses that to save a score for player, then sets it into a local storage variable
 
+
+//sets up event listeners for the start, reset, and highscore buttons
 resetButton.addEventListener("click", startGame);
 submitButton.addEventListener("click", submitInfo);
 scoreButton.addEventListener("click", function(){
@@ -305,7 +306,6 @@ scoreButton.addEventListener("click", function(){
   scorelist.style.display = "flex";
   endScore.style.display = "block";
   var pullscores = JSON.parse(localStorage.getItem("Scores"));
-
   var higher = -5;
   var highest = 0
   for(i=0; i < pullscores.length; i++){
@@ -315,6 +315,7 @@ scoreButton.addEventListener("click", function(){
       console.log("found a highest");
     }
   }
+  //finds the highest score and sets it as the first display of the highscore sheet
 
 var name = pullscores[highest].initials;
 var tscore = pullscores[highest].score;
@@ -332,7 +333,7 @@ for(i=0; i<pullscores.length; i++){
     higher = pullscores[i].score;
   }
 }
+ //finds the 2nd highest score and sets it as the 2nd display of the highscore sheet
 hs2.textContent = pullscores[newhigh].initials + "  " + pullscores[newhigh].score;
 }
 });
-// Attaches event listener to button
