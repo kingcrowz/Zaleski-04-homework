@@ -14,6 +14,7 @@
 
     <main class = "quizEl">
       <section>
+        <!-- this section contains the quiz questions and the answers -->
         <div class="card" id="word-guess">
           <div class="large-font word-blanks">You will have 30 seconds to answer as many questions as you can.</div>
           <button class="answer1"> </button>
@@ -24,8 +25,9 @@
       </section>
 
       <section>
+        <!-- this section contains the timer, as well as the score counter -->
         <div class="card results">
-          <div class = "win-loss-container">
+          <div class = "score-container">
           <div>
           <h2>Score: <span class="score">0</span></h2>
         </div>
@@ -65,6 +67,8 @@
       </select>
       <button type="submit" class="submit">Submit</button>
     </form>
+    <!-- this form is hidden until the game ends, then appears to collect info from the player to save to the scoresheet -->
+
       <button class="reset-button">Reset</button>
 
       <button class="score-btn">High scores(top 2)</button>
@@ -75,6 +79,7 @@
           <li class="high2">""</li>
         </ul>
       </section>
+      <!-- displays the top 2 scores on the game -->
 
     <script src="assets/js/script.js"></script>
   </body>
